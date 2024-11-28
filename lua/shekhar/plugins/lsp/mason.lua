@@ -2,7 +2,7 @@ return {
   "williamboman/mason.nvim",
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
-    "WhoIsSethDaniel/mason-tool-installer.nvim"
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
   config = function()
     -- import mason
@@ -48,7 +48,7 @@ return {
         "solidity_ls_nomicfoundation",
         "sqlls",
         "grammarly",
-        "yamlls"
+        "yamlls",
       },
     })
 
@@ -58,6 +58,8 @@ return {
         "stylua", -- lua formatter
         "isort", -- python formatter
         "black", -- python formatter
+        "pylint",
+        "eslint_d",
       },
     })
   end,
