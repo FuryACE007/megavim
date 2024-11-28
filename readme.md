@@ -68,6 +68,30 @@ nvim
 - `<leader>D` - Show buffer diagnostics
 - `<leader>d` - Show line diagnostics
 
+## 🔄 Text Manipulation
+
+### Word Operations
+- `viw` - Visually select inner word
+- `yiw` - Yank (copy) inner word
+
+### Substitute
+- `s{motion}` - Substitute with motion (e.g., `siw` to substitute word)
+- `ss` - Substitute line
+- `S` - Substitute to end of line
+- `s` - Substitute selection (in visual mode)
+
+### Surround
+- `ys{motion}{char}` - Add surround (e.g., `ysiw"` to surround word with quotes)
+- `ds{char}` - Delete surround (e.g., `ds"` to delete surrounding quotes)
+- `cs{target}{replacement}` - Change surround (e.g., `cs"'` to change quotes to single quotes)
+- `S{char}` - Surround selection (in visual mode)
+
+Common Examples:
+- `viw` then `S"` - Select word and surround with quotes
+- `ysiw"` - Surround word under cursor with quotes (without visual selection)
+- `viws` - Select word and substitute it
+- `cs"'` - Change surrounding double quotes to single quotes
+
 ## 🔧 Diagnostics and Troubleshooting
 
 ### Trouble
