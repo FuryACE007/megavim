@@ -3,7 +3,13 @@ return {
     version = "*",
     config = function()
       require("toggleterm").setup({
-        size = 15,
+        size = function(term)
+          if term.direction == "horizontal" then
+            return vim.o.lines * 0.3  -- 30% of screen height
+          elseif term.direction == "vertical" then
+            return vim.o.columns * 0.3
+          end
+        end,
         open_mapping = [[<c-\>]],
         hide_numbers = true,
         shade_filetypes = {},
