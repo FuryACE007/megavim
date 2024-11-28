@@ -33,6 +33,7 @@ nvim
 ## 🔍 Search and Navigation
 
 ### Telescope
+
 - `<leader>ff` - Find files
 - `<leader>fg` - Live grep
 - `<leader>fs` - Find string under cursor
@@ -48,6 +49,7 @@ nvim
 - `<C-q>` - Send to quickfix list
 
 ### LSP Navigation
+
 - `gR` - Show LSP references
 - `gD` - Go to declaration
 - `gd` - Show LSP definitions
@@ -57,11 +59,13 @@ nvim
 - `<leader>rs` - Restart LSP
 
 ### Todo Comments
+
 - `]t` - Next todo comment
 - `[t` - Previous todo comment
 - `<leader>xt` - List all todo comments
 
 ## 💻 Code Actions and Refactoring
+
 - `<leader>ca` - See available code actions
 - `<leader>rn` - Smart rename
 - `<leader>mp` - Format file or selection (works in visual mode)
@@ -71,22 +75,26 @@ nvim
 ## 🔄 Text Manipulation
 
 ### Word Operations
+
 - `viw` - Visually select inner word
 - `yiw` - Yank (copy) inner word
 
 ### Substitute
+
 - `s{motion}` - Substitute with motion (e.g., `siw` to substitute word)
 - `ss` - Substitute line
 - `S` - Substitute to end of line
 - `s` - Substitute selection (in visual mode)
 
 ### Surround
+
 - `ys{motion}{char}` - Add surround (e.g., `ysiw"` to surround word with quotes)
 - `ds{char}` - Delete surround (e.g., `ds"` to delete surrounding quotes)
 - `cs{target}{replacement}` - Change surround (e.g., `cs"'` to change quotes to single quotes)
 - `S{char}` - Surround selection (in visual mode)
 
 Common Examples:
+
 - `viw` then `S"` - Select word and surround with quotes
 - `ysiw"` - Surround word under cursor with quotes (without visual selection)
 - `viws` - Select word and substitute it
@@ -95,6 +103,7 @@ Common Examples:
 ## 🔧 Diagnostics and Troubleshooting
 
 ### Trouble
+
 - `<leader>xw` - Toggle workspace diagnostics
 - `<leader>xd` - Toggle document diagnostics
 - `<leader>xq` - Toggle quickfix list
@@ -102,11 +111,13 @@ Common Examples:
 - `<leader>xt` - Toggle TODOs
 
 ### Linting
+
 - `<leader>l` - Trigger linting for current file
 
 ## 📝 Code Completion
 
 ### nvim-cmp
+
 - `<C-k>` - Select previous suggestion
 - `<C-j>` - Select next suggestion
 - `<C-b>` - Scroll docs backward
@@ -116,12 +127,14 @@ Common Examples:
 - `<CR>` - Confirm selection
 
 ### GitHub Copilot
+
 - `<Tab>` - Accept suggestion
 - `<M-]>` - Next suggestion
 - `<M-[>` - Previous suggestion
 - `<C-]>` - Dismiss suggestion
 
 ## 🦀 Rust-Specific
+
 - `<C-space>` - Hover actions
 - `<leader>ca` - Code action groups
 - `]d` - Next error/warning
@@ -130,12 +143,14 @@ Common Examples:
 ## 🎨 UI and Window Management
 
 ### Window Navigation
+
 - `<C-h>` - Navigate left
 - `<C-j>` - Navigate down
 - `<C-k>` - Navigate up
 - `<C-l>` - Navigate right
 
 ### Window Management
+
 - `<leader>sm` - Toggle maximize/restore current window
 - `<leader>sv` - Split window vertically
 - `<leader>sh` - Split window horizontally
@@ -145,12 +160,12 @@ Common Examples:
 ## 💾 Session Management
 
 ### Auto Session
-- `<leader>qs` - Save session
-- `<leader>qd` - Delete session
-- `<leader>qr` - Restore session
-- `<leader>ql` - List sessions
+
+- `<leader>ws` - Save session
+- `<leader>wr` - Restore session
 
 ### Session Tips
+
 - Sessions are automatically saved when exiting Neovim
 - Sessions store:
   - Open buffers and their layout
@@ -160,6 +175,7 @@ Common Examples:
 - Use `<leader>ql` to switch between different project sessions
 
 ## 🔄 Git Integration
+
 - `]c` - Next hunk
 - `[c` - Previous hunk
 - `<leader>gh` - Preview hunk
@@ -174,10 +190,12 @@ Common Examples:
 ## 🐛 Debugging
 
 ### Breakpoints
+
 - `<leader>db` - Toggle breakpoint
 - `<leader>dB` - Set conditional breakpoint
 
 ### Control
+
 - `<leader>dc` - Continue
 - `<leader>di` - Step into
 - `<leader>do` - Step over
@@ -187,23 +205,27 @@ Common Examples:
 - `<leader>dx` - Terminate
 
 ### UI
+
 - `<leader>du` - Toggle debug UI
 - `<leader>dh` - Hover variables
 - `<leader>dp` - Preview (evaluate expression)
 
 ## 📌 Notes
+
 - `<leader>` key is set to space
 - Most commands work in normal mode unless specified
 - Some commands have visual mode variants
 - LSP commands are buffer-specific and only work when LSP is active
 
 ## 🔄 Common Operations
+
 - Format on save is enabled with a timeout of 1000ms
 - Linting runs on buffer enter, write, and insert leave
 - LSP features are automatically enabled for supported file types
 - Copilot suggestions appear automatically while typing
 
 ## 🎯 Pro Tips
+
 1. Use `K` to quickly view documentation
 2. Combine `<leader>ca` with visual selection for bulk actions
 3. Use Telescope with `<C-q>` to build quickfix lists
@@ -212,3 +234,4 @@ Common Examples:
 6. Use `<leader>fg` for project-wide search
 7. Git blame with `<leader>gb` shows commit information
 8. Debug UI (`<leader>du`) shows all variables and breakpoints
+
