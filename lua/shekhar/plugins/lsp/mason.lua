@@ -60,6 +60,9 @@ return {
         "black", -- python formatter
         "pylint",
         "eslint_d",
+        "rustfmt", -- rust formatter
+        "codelldb",    -- For Rust debugging
+        "js-debug-adapter",  -- For JavaScript/TypeScript debugging
       },
     })
   end,
