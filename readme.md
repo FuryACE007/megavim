@@ -210,6 +210,27 @@ Common Examples:
 - `<leader>dh` - Hover variables
 - `<leader>dp` - Preview (evaluate expression)
 
+## 📌️ Terminal Integration
+
+### Toggle Terminal
+- `<C-\>` - Toggle terminal (alternative method)
+- `<leader>tt` - Toggle terminal
+- `<leader>cr` - Run cargo run in terminal
+
+### Terminal Navigation
+- `<esc>` or `jk` - Exit terminal mode (return to normal mode)
+- `i` - Enter terminal mode (when in normal mode)
+- `<C-h>` - Move to left window
+- `<C-j>` - Move to bottom window
+- `<C-k>` - Move to top window
+- `<C-l>` - Move to right window
+
+### Terminal Tips
+1. Use terminal mode for command input
+2. Use normal mode for scrolling and copying
+3. Terminal state is preserved across toggles
+4. Multiple terminals can be created and managed
+
 ## 📌 Notes
 
 - `<leader>` key is set to space
