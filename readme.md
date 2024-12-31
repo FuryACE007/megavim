@@ -58,6 +58,13 @@ nvim
 - `K` - Show documentation
 - `<leader>rs` - Restart LSP
 
+### Comments
+
+- `gcc` - Toggle line comment
+- `gbc` - Toggle block comment
+- `gc` - Toggle line comment (visual mode)
+- `gb` - Toggle block comment (visual mode)
+
 ### Todo Comments
 
 - `]t` - Next todo comment
