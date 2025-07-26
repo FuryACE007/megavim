@@ -47,9 +47,9 @@ return {
         "rust_analyzer",
         "solidity_ls_nomicfoundation",
         "sqlls",
-        "grammarly",
         "yamlls",
       },
+      automatic_installation = true,
     })
 
     mason_tool_installer.setup({
