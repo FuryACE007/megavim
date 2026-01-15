@@ -25,6 +25,9 @@ return {
 
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
+    
+    -- Load custom C++ DSA snippets
+    require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/lua/shekhar/snippets" })
 
     cmp.setup({
       completion = {

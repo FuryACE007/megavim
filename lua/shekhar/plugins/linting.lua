@@ -36,9 +36,9 @@ return {
 
     -- Setup linters conditionally
     local function setup_linters()
-      local linters_by_ft = {
-        python = { "pylint" },
-      }
+      local linters_by_ft = {}
+      
+      -- Python linter removed (not needed for C++ DSA focus)
       
       -- Only add eslint_d if eslint config exists
       if has_eslint_config() then

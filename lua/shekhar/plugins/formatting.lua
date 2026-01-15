@@ -19,8 +19,11 @@ return {
         graphql = { "prettier" },
         liquid = { "prettier" },
         lua = { "stylua" },
-        python = { "isort", "black" },
         rust = { "rustfmt" },
+        cpp = { "clang_format" },
+        c = { "clang_format" },
+        -- Python formatters removed (not needed for C++ DSA)
+        -- python = { "isort", "black" },
       },
       format_on_save = {
         lsp_fallback = true,

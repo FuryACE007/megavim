@@ -1,6 +1,29 @@
 # Neovim IDE Configuration
 
-A modern Neovim configuration for full-stack development with focus on Rust and MERN stack.
+A modern Neovim configuration for full-stack development with focus on Rust, MERN stack, and **C++ DSA problem solving**.
+
+## 🎯 C++ DSA Problem Solving Setup
+
+This configuration is optimized for competitive programming and DSA interview preparation! 
+
+**Quick Start:**
+1. Create a file: `nvim problem.cpp`
+2. Type `dsa` + Tab for instant template
+3. Press `F5` to compile and run
+
+**📚 Documentation:**
+- **Setup Instructions**: See `SETUP_INSTRUCTIONS.md` to get started
+- **Quick Reference**: See `QUICK_REFERENCE.md` for essential keybindings
+- **Complete Guide**: See `CPP_DSA_GUIDE.md` for detailed documentation
+- **Sample Problem**: Check `sample_problem.cpp` for an example
+
+**Key Features:**
+- ✨ One-key compilation and execution (`F5`, `F6`)
+- 🧪 Built-in test case management
+- 📝 DSA-optimized code templates and snippets
+- 🚀 Fast I/O setup
+- 🎨 Auto-formatting with clang-format
+- 🔍 Full LSP support (clangd)
 
 ## ⚡️ Requirements
 
@@ -13,6 +36,11 @@ A modern Neovim configuration for full-stack development with focus on Rust and 
 - Node.js >= 16.x (for LSP servers)
 - Rust toolchain (for Rust development)
 - LLDB (for Rust debugging)
+
+### For C++ DSA:
+- g++ or clang++ (C++ compiler)
+- clangd (LSP server, install via `:Mason`)
+- clang-format (code formatter): `brew install clang-format` (macOS) or `apt install clang-format` (Linux)
 
 ## 🛠️ Installation
 
@@ -146,6 +174,49 @@ Common Examples:
 - `<leader>ca` - Code action groups
 - `]d` - Next error/warning
 - `[d` - Previous error/warning
+
+## 💻 C++ DSA Problem Solving
+
+### Quick Compile & Run
+- `F4` - Compile only (check for errors)
+- `F5` - Compile and run (interactive input)
+- `F6` - Compile and run with input from `<filename>_input.txt`
+
+### File Management
+- `<leader>ci` - Create/open input file for current problem
+- `<leader>co` - Create/open output file for current problem
+
+### Test Case Management (CompetiTest)
+- `<leader>cr` - Run all test cases
+- `<leader>ca` - Add a new test case interactively
+- `<leader>ce` - Edit existing test case
+- `<leader>cd` - Delete a test case
+- `<leader>cra` - Run all test cases
+- `<leader>cst` - Show all test cases
+
+### C++ Code Snippets
+Type these and press Tab to expand:
+- `dsa` - Full competitive programming template
+- `cppmain` - Simple main function
+- `fastio` - Fast I/O setup
+- `vinput` - Vector input loop
+- `vprint` - Vector print loop
+- `binary_search` - Binary search implementation
+- `sliding_window` - Sliding window template
+- `two_pointers` - Two pointers pattern
+- `dfs` - DFS graph traversal
+- `bfs` - BFS graph traversal
+
+### C++ Workflow Example
+1. `nvim two_sum.cpp`
+2. Type `dsa` + Tab (get template)
+3. Write solution in `solve()` function
+4. Press `<leader>ci` (create input file)
+5. Add test input in split window
+6. Press `F6` (run with input file)
+7. Check results!
+
+**See `CPP_DSA_GUIDE.md` for complete documentation**
 
 ## 🎨 UI and Window Management
 

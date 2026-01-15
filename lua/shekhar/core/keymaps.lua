@@ -17,3 +17,19 @@ keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" 
 keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+
+-- Quick save
+keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
+keymap.set("i", "<C-s>", "<ESC><cmd>w<CR>", { desc = "Save file from insert mode" })
+
+-- Better navigation between splits
+keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left split" })
+keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom split" })
+keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top split" })
+keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right split" })
+
+-- Resize splits
+keymap.set("n", "<C-Up>", "<cmd>resize +2<CR>", { desc = "Increase split height" })
+keymap.set("n", "<C-Down>", "<cmd>resize -2<CR>", { desc = "Decrease split height" })
+keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Decrease split width" })
+keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase split width" })

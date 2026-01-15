@@ -25,30 +25,16 @@ return {
     })
 
     mason_lspconfig.setup({
-      -- list of servers for mason to install
+      -- Essential LSP servers for C++ DSA focus
       ensure_installed = {
-        "ts_ls",
-        "html",
-        "cssls",
-        "tailwindcss",
-        "svelte",
-        "lua_ls",
-        "graphql",
-        "emmet_ls",
-        "prismals",
-        "pyright",
-        "bashls",
-        "clangd",
-        "awk_ls",
-        "dockerls",
-        "elixirls",
-        "gopls",
-        "eslint",
-        "rust_analyzer",
-        "solidity_ls_nomicfoundation",
-        "sqlls",
-        "yamlls",
+        "clangd",        -- C++ LSP (PRIMARY for DSA problem solving)
+        "lua_ls",        -- Lua LSP (for editing Neovim config)
+        "bashls",        -- Bash LSP (for shell scripts)
+        "rust_analyzer", -- Rust LSP (if you do Rust)
       },
+      -- Optional: Add these back if you need them:
+      -- "ts_ls", "html", "cssls", "eslint" (web dev)
+      -- "gopls" (Go), "sqlls" (SQL)
       automatic_installation = true,
     })
 
@@ -56,13 +42,13 @@ return {
       ensure_installed = {
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
-        "isort", -- python formatter
-        "black", -- python formatter
-        "pylint",
         "eslint_d",
         "rustfmt", -- rust formatter
         "codelldb",    -- For Rust debugging
         "js-debug-adapter",  -- For JavaScript/TypeScript debugging
+        "clang-format", -- C++ formatter (for DSA)
+        -- Python tools removed (not needed for C++ DSA focus):
+        -- "isort", "black", "pylint"
       },
     })
   end,
