@@ -70,19 +70,28 @@ return {
 
     -- Use new vim.lsp.config API (Neovim 0.11+)
     -- Configure C++ LSP (PRIMARY for DSA)
+    -- Prefer Mason's clangd (newer) over system clangd
+    local clangd_path = vim.fn.expand("~/.local/share/nvim/mason/bin/clangd")
+    local clangd_cmd = "clangd"
+    if vim.fn.executable(clangd_path) == 1 then
+      clangd_cmd = clangd_path
+    end
+    
     vim.lsp.config("clangd", {
       cmd = {
-        "clangd",
+        clangd_cmd,
         "--background-index",
         "--clang-tidy",
         "--header-insertion=iwyu",
         "--completion-style=detailed",
         "--function-arg-placeholders",
+        "--query-driver=/opt/homebrew/bin/g++-15,/opt/homebrew/bin/g++-14,/opt/homebrew/bin/g++-13,/usr/bin/g++",
       },
       capabilities = capabilities,
       init_options = {
         clangdFileStatus = true,
         usePlaceholders = true,
+        fallbackFlags = { "-std=c++17" },
       },
     })
 
