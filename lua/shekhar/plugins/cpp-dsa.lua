@@ -203,8 +203,9 @@ return {
         end
         
         local cmd = string.format(
-          "cd %s && echo '=== Compiling ===' && %s -std=c++17 -Wall -O2 %s'%s' -o '%s' && echo '=== Running ===' && ./'%s' && echo '' && echo '=== Program finished ==='",
+          "cd %s && rm -f '%s' && echo '=== Compiling ===' && %s -std=c++17 -Wall -O2 %s'%s' -o '%s' && echo '=== Running ===' && ./'%s' && echo '' && echo '=== Program finished ==='",
           vim.fn.shellescape(dir),
+          exename,
           gpp,
           include_flag,
           filename,
@@ -235,8 +236,9 @@ return {
         end
         
         local cmd = string.format(
-          "cd %s && echo '=== Compiling ===' && %s -std=c++17 -Wall -O2 %s'%s' -o '%s' && echo '=== Running with input from %s ===' && ./'%s' < '%s' && echo '' && echo '=== Program finished ==='",
+          "cd %s && rm -f '%s' && echo '=== Compiling ===' && %s -std=c++17 -Wall -O2 %s'%s' -o '%s' && echo '=== Running with input from %s ===' && ./'%s' < '%s' && echo '' && echo '=== Program finished ==='",
           vim.fn.shellescape(dir),
+          exename,
           gpp,
           include_flag,
           filename,
@@ -267,8 +269,9 @@ return {
         end
         
         local cmd = string.format(
-          "cd %s && echo '=== Compiling ===' && %s -std=c++17 -Wall -O2 %s'%s' -o '%s' && echo '=== Compilation successful ===' || echo '=== Compilation failed ==='",
+          "cd %s && rm -f '%s' && echo '=== Compiling ===' && %s -std=c++17 -Wall -O2 %s'%s' -o '%s' && echo '=== Compilation successful ===' || echo '=== Compilation failed ==='",
           vim.fn.shellescape(dir),
+          exename,
           gpp,
           include_flag,
           filename,
