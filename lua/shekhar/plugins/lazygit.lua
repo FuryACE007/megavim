@@ -1,19 +1,21 @@
 return {
   "kdheepak/lazygit.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
   cmd = {
-    "LazyGit",
-    "LazyGitConfig",
-    "LazyGitCurrentFile",
-    "LazyGitFilter",
-    "LazyGitFilterCurrentFile",
+    "LazyGit", "LazyGitConfig", "LazyGitCurrentFile",
+    "LazyGitFilter", "LazyGitFilterCurrentFile",
   },
-  -- optional for floating window border decoration
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-  },
-  -- setting the keybinding for LazyGit with 'keys' is recommended in
-  -- order to load the plugin when the command is run for the first time
   keys = {
-    { "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open lazy git" },
+    { "<leader>lg",  "<cmd>LazyGit<CR>",                  desc = "LazyGit" },
+    { "<leader>lf",  "<cmd>LazyGitCurrentFile<CR>",        desc = "LazyGit (current file)" },
+    { "<leader>ll",  "<cmd>LazyGitFilter<CR>",             desc = "LazyGit log (project)" },
+    { "<leader>lL",  "<cmd>LazyGitFilterCurrentFile<CR>",  desc = "LazyGit log (current file)" },
   },
+  init = function()
+    vim.g.lazygit_floating_window_winblend = 0
+    vim.g.lazygit_floating_window_scaling_factor = 0.92
+    vim.g.lazygit_floating_window_border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+    vim.g.lazygit_floating_window_use_plenary = 1
+    vim.g.lazygit_use_neovim_remote = 1
+  end,
 }
