@@ -1,336 +1,230 @@
-# Neovim IDE Configuration
+# MEGAVIM — A Polyglot PDE
 
-A modern Neovim configuration for full-stack development with focus on Rust, MERN stack, and **C++ DSA problem solving**.
+A modern, IDE-on-par **Personal Development Environment** for Neovim covering:
 
-## 🎯 C++ DSA Problem Solving Setup
+- **Solidity / Solana / EVM** smart-contract development
+- **AI / Python** workstreams
+- **C++ DSA** & competitive programming
+- **Rust** (systems + Anchor / Solana programs)
+- **Web / MERN stack** (TypeScript, React, Node, MongoDB via Prisma)
 
-This configuration is optimized for competitive programming and DSA interview preparation! 
+Designed so you can stay inside Neovim for the entire dev loop — no need to drop back to VS Code.
 
-**Quick Start:**
-1. Create a file: `nvim problem.cpp`
-2. Type `dsa` + Tab for instant template
-3. Press `F5` to compile and run
+> **Quick help inside Neovim:** press `<Space>?` or run `:PDEHelp`.
 
-**📚 Documentation:**
-- **Setup Instructions**: See `SETUP_INSTRUCTIONS.md` to get started
-- **Quick Reference**: See `QUICK_REFERENCE.md` for essential keybindings
-- **Complete Guide**: See `CPP_DSA_GUIDE.md` for detailed documentation
-- **Sample Problem**: Check `sample_problem.cpp` for an example
+---
 
-**Key Features:**
-- ✨ One-key compilation and execution (`F5`, `F6`)
-- 🧪 Built-in test case management
-- 📝 DSA-optimized code templates and snippets
-- 🚀 Fast I/O setup
-- 🎨 Auto-formatting with clang-format
-- 🔍 Full LSP support (clangd)
+## ✨ Highlights
 
-## ⚡️ Requirements
+| Area | Tooling |
+|---|---|
+| LSPs | clangd, rust_analyzer, ts_ls, eslint, html, cssls, tailwindcss, emmet, jsonls, prismals, pyright, ruff, solidity_ls_nomicfoundation, taplo, yamlls, dockerls, marksman, lua_ls, bashls |
+| Formatters | prettierd/prettier, stylua, rustfmt, clang-format, black, isort, taplo, shfmt, sql-formatter |
+| Linters | eslint_d, ruff, shellcheck, hadolint, markdownlint, solhint |
+| Completion | nvim-cmp + LuaSnip + GitHub Copilot (via copilot-cmp) |
+| Debugging | nvim-dap (Rust via codelldb, JS/TS via js-debug-adapter, debugpy for Python) |
+| UI | tokyonight, lualine, bufferline (VSCode-like tabs), noice, nvim-notify, alpha dashboard |
+| Editing | flash.nvim motion, illuminate, surround, substitute, autopairs, ts_context_commentstring, nvim-ufo folds, treesitter-context |
+| Files | nvim-tree, telescope (fzf-native), oil-like editing, lazygit |
+| Testing | competitest.nvim (C++ test cases) |
+| Git | gitsigns + lazygit |
 
-- Neovim >= 0.9.0
-- Git >= 2.19.0 (for partial clones support)
-- A Nerd Font (optional, for icons)
-- gcc (for treesitter)
-- ripgrep (for telescope)
-- lazygit (optional, for git integration)
-- Node.js >= 16.x (for LSP servers)
-- Rust toolchain (for Rust development)
-- LLDB (for Rust debugging)
+---
 
-### For C++ DSA:
-- g++ or clang++ (C++ compiler)
-- clangd (LSP server, install via `:Mason`)
-- clang-format (code formatter): `brew install clang-format` (macOS) or `apt install clang-format` (Linux)
+## ⚡ Requirements
 
-## 🛠️ Installation
+Hard:
+- **Neovim ≥ 0.11** (uses `vim.lsp.config`/`vim.lsp.enable`)
+- **git ≥ 2.19**
+- **ripgrep** (`rg`) — telescope live grep
+- **fd** — telescope file finder
+- **A Nerd Font** — for icons
+- **gcc / make** — treesitter compilation
+- **Node.js ≥ 18** — most LSPs are Node-based
+
+Per-stack (install only what you need):
+- **C++ DSA**: g++/clang++, clang-format
+- **Rust**: rustup, lldb (for debugging)
+- **Python / AI**: python ≥ 3.10
+- **Web**: bun or pnpm/npm
+- **Solidity**: forge / hardhat (optional)
+- **Solana**: solana CLI, anchor CLI
+
+External tools (Mason auto-installs LSPs/formatters/linters/DAP adapters listed under `mason.lua`).
+
+---
+
+## 🛠 Installation
 
 ```bash
-# Backup existing Neovim configuration
-mv ~/.config/nvim ~/.config/nvim.bak
-mv ~/.local/share/nvim ~/.local/share/nvim.bak
+# Backup any existing config
+mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null
+mv ~/.local/share/nvim ~/.local/share/nvim.bak 2>/dev/null
 
-# Clone the repository
-git clone https://github.com/yourusername/nvim-config.git ~/.config/nvim
+# Clone
+git clone https://github.com/<your-username>/nvim-config.git ~/.config/nvim
 
-# Start Neovim (plugins will be installed automatically)
+# First launch — lazy.nvim & Mason install everything (let it finish)
 nvim
 ```
 
-# Neovim IDE Keybindings Cheatsheet
+Inside Neovim: run `:Lazy sync`, then `:Mason` and verify all servers/tools show as installed.
 
-## 🔍 Search and Navigation
+GitHub Copilot: run `:Copilot auth` (then follow device-code flow). Disable with `:Copilot disable` if you don't want AI completion.
 
-### Telescope
+---
 
-- `<leader>ff` - Find files
-- `<leader>fg` - Live grep
-- `<leader>fs` - Find string under cursor
-- `<leader>fb` - Find buffers
-- `<leader>fh` - Help tags
-- `<leader>fk` - Keymaps
-- `<leader>fr` - Recent files
-- `<leader>fc` - Find word under cursor
-- `<leader>fC` - Find word under cursor (root dir)
-- `<leader>fd` - Find diagnostics
-- `<C-k>` - Move to previous result
-- `<C-j>` - Move to next result
-- `<C-q>` - Send to quickfix list
+## 🚀 Getting Started
 
-### LSP Navigation
+1. Open a file — LSP, treesitter, formatter, completion all wire up automatically per filetype.
+2. Press `<Space>?` to see every keymap in a floating help window. (Also `:PDEHelp`.)
+3. Press `<Space>ff` to fuzzy-find files, `<Space>fs` to grep the project.
 
-- `gR` - Show LSP references
-- `gD` - Go to declaration
-- `gd` - Show LSP definitions
-- `gi` - Show LSP implementations
-- `gt` - Show LSP type definitions
-- `K` - Show documentation
-- `<leader>rs` - Restart LSP
+> **Tip:** Leader is `<Space>`. The help reference is the source of truth — this README is a tour.
 
-### Comments
+---
 
-- `gcc` - Toggle line comment
-- `gbc` - Toggle block comment
-- `gc` - Toggle line comment (visual mode)
-- `gb` - Toggle block comment (visual mode)
+## 🪟 IDE-like Workflow
 
-### Todo Comments
+### Buffers (VSCode-style tabs)
+- `<Tab>` / `<S-Tab>` — cycle next/prev buffer
+- `<Space>1..9` — jump directly to buffer N
+- `<Space>bd` — close buffer · `<Space>bD` — close others
+- `<Space>bb` — pick buffer by label
+- `<Space>bP` — pin · `<Space>bh` / `<Space>bl` — close left/right of current
 
-- `]t` - Next todo comment
-- `[t` - Previous todo comment
-- `<leader>xt` - List all todo comments
+### Splits
+- `<Space>sv` / `<Space>sh` — vertical / horizontal split
+- `<Ctrl-h/j/k/l>` — navigate splits (also jumps across tmux panes)
+- `<Ctrl-Arrow>` — resize (smart-splits, tmux-aware)
+- `<Space>sH/sJ/sK/sL` — swap buffers between splits
+- `<Space>se` — equalize · `<Space>sm` — maximize/restore · `<Space>so` — close others
 
-## 💻 Code Actions and Refactoring
+### Tabs (full-screen workspaces)
+- `<Space>to` / `<Space>tx` — open / close · `<Space>tn` / `<Space>tp` — next/prev
+- `<Space>tf` — move current buffer to its own tab
 
-- `<leader>ca` - See available code actions
-- `<leader>rn` - Smart rename
-- `<leader>mp` - Format file or selection (works in visual mode)
-- `<leader>D` - Show buffer diagnostics
-- `<leader>d` - Show line diagnostics
-
-## 🔄 Text Manipulation
+---
 
-### Word Operations
-
-- `viw` - Visually select inner word
-- `yiw` - Yank (copy) inner word
-
-### Substitute
-
-- `s{motion}` - Substitute with motion (e.g., `siw` to substitute word)
-- `ss` - Substitute line
-- `S` - Substitute to end of line
-- `s` - Substitute selection (in visual mode)
+## 💻 Per-Language Notes
 
-### Surround
+### Web / MERN
+- `ts_ls` for TS/JS, `eslint` LSP auto-fixes on save, `tailwindcss` LSP for class completion + previews, `emmet` for HTML/JSX expansion, `prismals` for `schema.prisma`.
+- `prettierd` runs on save.
+- Linting via `eslint_d` only kicks in if a project-level ESLint config is present.
+- Debug Node/Chrome with `<Space>db` then `<Space>dc`.
 
-- `ys{motion}{char}` - Add surround (e.g., `ysiw"` to surround word with quotes)
-- `ds{char}` - Delete surround (e.g., `ds"` to delete surrounding quotes)
-- `cs{target}{replacement}` - Change surround (e.g., `cs"'` to change quotes to single quotes)
-- `S{char}` - Surround selection (in visual mode)
+### Python / AI
+- `pyright` for types, `ruff` LSP for diagnostics + fix-ons, `black` + `isort` on save.
+- DAP adapter: `debugpy` (installed via Mason).
 
-Common Examples:
+### C++ / DSA
+- F4 = compile, F5 = compile + run, F6 = run with `<name>_input.txt`.
+- `dsa<Tab>` snippet inserts a competitive template. See `QUICK_REFERENCE.md`.
+- CompetiTest for multi-test workflow: `<Space>cr`, `<Space>ca`, `<Space>cra`.
+- `.clangd` at the repo root pins flags for clangd.
 
-- `viw` then `S"` - Select word and surround with quotes
-- `ysiw"` - Surround word under cursor with quotes (without visual selection)
-- `viws` - Select word and substitute it
-- `cs"'` - Change surrounding double quotes to single quotes
-
-## 🔧 Diagnostics and Troubleshooting
+### Rust (incl. Solana / Anchor)
+- `rust-tools` drives rust-analyzer with inlay hints + clippy on save.
+- `taplo` LSP handles `Cargo.toml` and `Anchor.toml`.
+- `<C-Space>` hover actions, `<Space>ca` code-action group.
+- Debug with codelldb: `<Space>db` then `<Space>dc`.
+- `<Space>rt` runs `cargo run` in a persistent terminal.
 
-### Trouble
+### Solidity / EVM
+- `solidity_ls_nomicfoundation` LSP — diagnostics, definitions, hover.
+- `solhint` linting (uses your project's `.solhint.json` if present).
+- Format with `prettier` (install `prettier-plugin-solidity` in your project).
+- Treesitter solidity parser pre-installed.
 
-- `<leader>xw` - Toggle workspace diagnostics
-- `<leader>xd` - Toggle document diagnostics
-- `<leader>xq` - Toggle quickfix list
-- `<leader>xl` - Toggle location list
-- `<leader>xt` - Toggle TODOs
+### Lua / Shell / Markdown / Docker / YAML / SQL
+- `lua_ls` (vim-aware), `bashls` + `shellcheck`, `marksman` + `markdownlint`, `dockerls` + `hadolint`, `yamlls` (schemastore), `sql-formatter`.
 
-### Linting
+---
 
-- `<leader>l` - Trigger linting for current file
+## 🧠 Completion & AI
 
-## 📝 Code Completion
+- `<Tab>` / `<S-Tab>` — pick next/prev item or expand/jump in snippets
+- `<C-Space>` — trigger completion explicitly
+- `<C-n>` / `<C-p>` — cycle items
+- `<C-b>` / `<C-f>` — scroll docs · `<C-e>` — abort · `<CR>` — confirm
+- Copilot suggestions appear inline as cmp items (priority 100). Run `:Copilot status` to verify.
 
-### nvim-cmp
+---
 
-- `<C-k>` - Select previous suggestion
-- `<C-j>` - Select next suggestion
-- `<C-b>` - Scroll docs backward
-- `<C-f>` - Scroll docs forward
-- `<C-Space>` - Show completion suggestions
-- `<C-e>` - Close completion window
-- `<CR>` - Confirm selection
-
-### GitHub Copilot
-
-- `<Tab>` - Accept suggestion
-- `<M-]>` - Next suggestion
-- `<M-[>` - Previous suggestion
-- `<C-]>` - Dismiss suggestion
-
-## 🦀 Rust-Specific
-
-- `<C-space>` - Hover actions
-- `<leader>ca` - Code action groups
-- `]d` - Next error/warning
-- `[d` - Previous error/warning
-
-## 💻 C++ DSA Problem Solving
-
-### Quick Compile & Run
-- `F4` - Compile only (check for errors)
-- `F5` - Compile and run (interactive input)
-- `F6` - Compile and run with input from `<filename>_input.txt`
-
-### File Management
-- `<leader>ci` - Create/open input file for current problem
-- `<leader>co` - Create/open output file for current problem
-
-### Test Case Management (CompetiTest)
-- `<leader>cr` - Run all test cases
-- `<leader>ca` - Add a new test case interactively
-- `<leader>ce` - Edit existing test case
-- `<leader>cd` - Delete a test case
-- `<leader>cra` - Run all test cases
-- `<leader>cst` - Show all test cases
-
-### C++ Code Snippets
-Type these and press Tab to expand:
-- `dsa` - Full competitive programming template
-- `cppmain` - Simple main function
-- `fastio` - Fast I/O setup
-- `vinput` - Vector input loop
-- `vprint` - Vector print loop
-- `binary_search` - Binary search implementation
-- `sliding_window` - Sliding window template
-- `two_pointers` - Two pointers pattern
-- `dfs` - DFS graph traversal
-- `bfs` - BFS graph traversal
-
-### C++ Workflow Example
-1. `nvim two_sum.cpp`
-2. Type `dsa` + Tab (get template)
-3. Write solution in `solve()` function
-4. Press `<leader>ci` (create input file)
-5. Add test input in split window
-6. Press `F6` (run with input file)
-7. Check results!
-
-**See `CPP_DSA_GUIDE.md` for complete documentation**
-
-## 🎨 UI and Window Management
-
-### Window Navigation
-
-- `<C-h>` - Navigate left
-- `<C-j>` - Navigate down
-- `<C-k>` - Navigate up
-- `<C-l>` - Navigate right
-
-### Window Management
-
-- `<leader>sm` - Toggle maximize/restore current window
-- `<leader>sv` - Split window vertically
-- `<leader>sh` - Split window horizontally
-- `<leader>se` - Make splits equal size
-- `<leader>sx` - Close current split
-
-## 💾 Session Management
-
-### Auto Session
-
-- `<leader>ws` - Save session
-- `<leader>wr` - Restore session
-
-### Session Tips
-
-- Sessions are automatically saved when exiting Neovim
-- Sessions store:
-  - Open buffers and their layout
-  - Window positions
-  - Working directory
-  - Terminal states
-- Use `<leader>ql` to switch between different project sessions
-
-## 🔄 Git Integration
-
-- `]c` - Next hunk
-- `[c` - Previous hunk
-- `<leader>gh` - Preview hunk
-- `<leader>gH` - Preview hunk inline
-- `<leader>gs` - Stage hunk
-- `<leader>gu` - Undo stage hunk
-- `<leader>gr` - Reset hunk
-- `<leader>gR` - Reset buffer
-- `<leader>gb` - Blame line
-- `<leader>gd` - Diff this
-
-## 🐛 Debugging
-
-### Breakpoints
-
-- `<leader>db` - Toggle breakpoint
-- `<leader>dB` - Set conditional breakpoint
-
-### Control
-
-- `<leader>dc` - Continue
-- `<leader>di` - Step into
-- `<leader>do` - Step over
-- `<leader>dO` - Step out
-- `<leader>dr` - Toggle REPL
-- `<leader>dl` - Run last
-- `<leader>dx` - Terminate
-
-### UI
-
-- `<leader>du` - Toggle debug UI
-- `<leader>dh` - Hover variables
-- `<leader>dp` - Preview (evaluate expression)
-
-## 📌️ Terminal Integration
-
-### Toggle Terminal
-- `<C-\>` - Toggle terminal (alternative method)
-- `<leader>tt` - Toggle terminal
-- `<leader>cr` - Run cargo run in terminal
-
-### Terminal Navigation
-- `<esc>` or `jk` - Exit terminal mode (return to normal mode)
-- `i` - Enter terminal mode (when in normal mode)
-- `<C-h>` - Move to left window
-- `<C-j>` - Move to bottom window
-- `<C-k>` - Move to top window
-- `<C-l>` - Move to right window
-
-### Terminal Tips
-1. Use terminal mode for command input
-2. Use normal mode for scrolling and copying
-3. Terminal state is preserved across toggles
-4. Multiple terminals can be created and managed
-
-## 📌 Notes
-
-- `<leader>` key is set to space
-- Most commands work in normal mode unless specified
-- Some commands have visual mode variants
-- LSP commands are buffer-specific and only work when LSP is active
-
-## 🔄 Common Operations
-
-- Format on save is enabled with a timeout of 1000ms
-- Linting runs on buffer enter, write, and insert leave
-- LSP features are automatically enabled for supported file types
-- Copilot suggestions appear automatically while typing
-
-## 🎯 Pro Tips
-
-1. Use `K` to quickly view documentation
-2. Combine `<leader>ca` with visual selection for bulk actions
-3. Use Telescope with `<C-q>` to build quickfix lists
-4. Trouble (`<leader>x`) provides a better view of diagnostics
-5. Format code with `<leader>mp` when automatic formatting fails
-6. Use `<leader>fg` for project-wide search
-7. Git blame with `<leader>gb` shows commit information
-8. Debug UI (`<leader>du`) shows all variables and breakpoints
+## 🩺 Diagnostics
 
+- `<Space>d` line float · `<Space>D` buffer list (telescope) · `[d` / `]d` jump
+- `<Space>x{w,d,q,l,t}` — Trouble panels: workspace / document / quickfix / loclist / todos
+- `[r` / `]r` — jump between references of symbol under cursor (illuminate)
+
+---
+
+## 🗒 Git
+
+- `<Space>lg` — full LazyGit
+- `]h` / `[h` — next/prev hunk · `<Space>hs` stage · `<Space>hr` reset · `<Space>hp` preview
+- `<Space>hb` blame line · `<Space>hB` toggle inline blame · `<Space>hd` diff this
+
+---
+
+## 🐛 Debug
+
+`<Space>db` toggle breakpoint · `<Space>dc` continue · `<Space>di/do/dO` step in/over/out · `<Space>du` toggle UI · `<Space>dx` terminate · `<Space>dl` re-run last.
+
+---
+
+## 🧩 Customizing
+
+- Plugins live in `lua/shekhar/plugins/` — one file per concern.
+- LSPs: edit `lua/shekhar/plugins/lsp/lspconfig.lua` and `lua/shekhar/plugins/lsp/mason.lua`.
+- Formatters/linters: `formatting.lua` and `linting.lua`.
+- Snippets: drop `.lua` files into `lua/shekhar/snippets/`.
+- Help text: `lua/shekhar/core/help.lua`.
+
+To temporarily disable autoformat-on-save: `:FormatDisable` (global) or `:FormatDisable!` (current buffer). Re-enable with `:FormatEnable`.
+
+---
+
+## 🛟 Troubleshooting
+
+- An LSP is missing? `:Mason` → search → press `i`.
+- A formatter/linter doesn't run? `:checkhealth conform` or `:checkhealth lint`.
+- Treesitter parser issues? `:TSUpdate`.
+- A plugin fails on startup? `:Lazy log` and check the offending entry.
+- Copilot not suggesting? `:Copilot status` and `:Copilot auth`.
+- Stale plugin lock causing breakage? `rm lazy-lock.json && nvim +Lazy! sync`.
+
+---
+
+## 📚 Files in this repo
+
+```
+init.lua                        — entry; loads core + lazy
+install.sh                      — bootstrap (optional)
+lazy-lock.json                  — pinned plugin versions
+.clangd                         — clangd flags for C++
+readme.md                       — this file
+QUICK_REFERENCE.md              — C++ DSA workflow cheatsheet
+lua/shekhar/
+  core/
+    init.lua                    — loads options/keymaps/help
+    options.lua                 — vim options
+    keymaps.lua                 — global keymaps
+    help.lua                    — :PDEHelp floating reference
+  lazy.lua                      — lazy.nvim bootstrap
+  snippets/                     — custom snippets (e.g. cpp.lua)
+  plugins/                      — one file per plugin
+    lsp/
+      mason.lua                 — Mason + tool installer
+      lspconfig.lua             — server configs (vim.lsp.config)
+    nvim-cmp.lua / copilot.lua  — completion + AI
+    treesitter*.lua / illuminate.lua / flash.lua / ufo.lua
+    bufferline.lua / lualine.lua / nvim-tree.lua / smart-splits.lua
+    formatting.lua / linting.lua
+    debugger.lua / rust-tools.lua / cpp-dsa.lua
+    gitsigns.lua / lazygit.lua / trouble.lua / todo-comments.lua
+    auto-session.lua / alpha.lua / dressing.lua / noice.lua
+    surround.lua / substitute.lua / autopairs.lua / comment.lua
+    indent-blankline.lua / vim-maximizer.lua / which-key.lua / toggleterm.lua
+```

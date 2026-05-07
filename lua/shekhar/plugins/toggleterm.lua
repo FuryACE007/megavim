@@ -43,7 +43,7 @@ return {
       end
   
       -- Keymaps
-      keymap.set("n", "<leader>cr", "<cmd>lua _cargo_run()<CR>", { desc = "Run cargo run in terminal" })
+      keymap.set("n", "<leader>rt", "<cmd>lua _cargo_run()<CR>", { desc = "Run cargo run in terminal" })
       keymap.set("n", "<leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
     
       -- Terminal navigation

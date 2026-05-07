@@ -7,11 +7,9 @@ return {
     { "folke/neodev.nvim", opts = {} },
   },
   config = function()
-    -- import cmp-nvim-lsp plugin
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local keymap = vim.keymap
 
-    -- LSP Attach keybindings
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
@@ -55,28 +53,36 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+
+        opts.desc = "Signature help"
+        keymap.set({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, opts)
       end,
     })
 
-    -- Capabilities for autocompletion
     local capabilities = cmp_nvim_lsp.default_capabilities()
+    -- nvim-ufo: advertise folding range support
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
 
-    -- Diagnostic symbols
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    -- Use new vim.lsp.config API (Neovim 0.11+)
-    -- Configure C++ LSP (PRIMARY for DSA)
-    -- Prefer Mason's clangd (newer) over system clangd
+    vim.diagnostic.config({
+      virtual_text = { prefix = "●", spacing = 2 },
+      severity_sort = true,
+      float = { border = "rounded", source = "always" },
+      update_in_insert = false,
+    })
+
+    -- C++ (DSA)
     local clangd_path = vim.fn.expand("~/.local/share/nvim/mason/bin/clangd")
-    local clangd_cmd = "clangd"
-    if vim.fn.executable(clangd_path) == 1 then
-      clangd_cmd = clangd_path
-    end
-    
+    local clangd_cmd = vim.fn.executable(clangd_path) == 1 and clangd_path or "clangd"
+
     vim.lsp.config("clangd", {
       cmd = {
         clangd_cmd,
@@ -91,11 +97,14 @@ return {
       init_options = {
         clangdFileStatus = true,
         usePlaceholders = true,
-        fallbackFlags = { "-std=c++17" },
+        fallbackFlags = {
+          "-std=c++17",
+          "-I" .. vim.fn.expand("~/.local/include"),
+        },
       },
     })
 
-    -- Lua LSP (for Neovim config)
+    -- Lua
     vim.lsp.config("lua_ls", {
       capabilities = capabilities,
       settings = {
@@ -107,20 +116,135 @@ return {
       },
     })
 
-    -- Bash LSP
-    vim.lsp.config("bashls", {
-      capabilities = capabilities,
-    })
+    -- Bash
+    vim.lsp.config("bashls", { capabilities = capabilities })
 
-    -- Rust LSP
+    -- Rust (rust-tools handles main config; lspconfig still useful for non-cargo files)
     vim.lsp.config("rust_analyzer", {
       capabilities = capabilities,
+      settings = {
+        ["rust-analyzer"] = {
+          checkOnSave = { command = "clippy" },
+          cargo = { allFeatures = true, loadOutDirsFromCheck = true },
+          procMacro = { enable = true },
+          inlayHints = { enable = true },
+        },
+      },
     })
 
-    -- Enable configured servers
-    vim.lsp.enable("clangd")
-    vim.lsp.enable("lua_ls")
-    vim.lsp.enable("bashls")
-    vim.lsp.enable("rust_analyzer")
+    -- TypeScript / JavaScript
+    vim.lsp.config("ts_ls", {
+      capabilities = capabilities,
+      init_options = {
+        preferences = {
+          includeInlayParameterNameHints = "all",
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+        },
+      },
+    })
+
+    -- ESLint
+    vim.lsp.config("eslint", {
+      capabilities = capabilities,
+      on_attach = function(_, bufnr)
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          command = "EslintFixAll",
+        })
+      end,
+    })
+
+    -- HTML / CSS / Tailwind / Emmet
+    vim.lsp.config("html", { capabilities = capabilities, filetypes = { "html", "templ" } })
+    vim.lsp.config("cssls", { capabilities = capabilities })
+    vim.lsp.config("tailwindcss", {
+      capabilities = capabilities,
+      filetypes = {
+        "html", "css", "scss", "javascript", "javascriptreact",
+        "typescript", "typescriptreact", "svelte", "vue", "astro",
+      },
+    })
+    vim.lsp.config("emmet_language_server", {
+      capabilities = capabilities,
+      filetypes = {
+        "css", "html", "javascriptreact", "less", "sass",
+        "scss", "svelte", "vue", "typescriptreact",
+      },
+    })
+
+    -- JSON
+    vim.lsp.config("jsonls", {
+      capabilities = capabilities,
+      settings = {
+        json = {
+          validate = { enable = true },
+        },
+      },
+    })
+
+    -- Prisma (MERN DBs)
+    vim.lsp.config("prismals", { capabilities = capabilities })
+
+    -- Python
+    vim.lsp.config("pyright", {
+      capabilities = capabilities,
+      settings = {
+        python = {
+          analysis = {
+            typeCheckingMode = "basic",
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "workspace",
+          },
+        },
+      },
+    })
+    vim.lsp.config("ruff", {
+      capabilities = capabilities,
+      on_attach = function(client, _)
+        -- Let pyright handle hover
+        client.server_capabilities.hoverProvider = false
+      end,
+    })
+
+    -- Solidity (Solana programs use Rust; this is for EVM chains)
+    vim.lsp.config("solidity_ls_nomicfoundation", {
+      capabilities = capabilities,
+      filetypes = { "solidity" },
+    })
+
+    -- TOML (Cargo.toml, Anchor.toml, pyproject.toml)
+    vim.lsp.config("taplo", { capabilities = capabilities })
+
+    -- YAML
+    vim.lsp.config("yamlls", {
+      capabilities = capabilities,
+      settings = {
+        yaml = {
+          schemaStore = { enable = true, url = "https://www.schemastore.org/api/json/catalog.json" },
+        },
+      },
+    })
+
+    -- Docker
+    vim.lsp.config("dockerls", { capabilities = capabilities })
+
+    -- Markdown
+    vim.lsp.config("marksman", { capabilities = capabilities })
+
+    -- Enable all
+    local servers = {
+      "clangd", "lua_ls", "bashls", "rust_analyzer",
+      "ts_ls", "eslint", "html", "cssls", "tailwindcss",
+      "emmet_language_server", "jsonls", "prismals",
+      "pyright", "ruff", "solidity_ls_nomicfoundation",
+      "taplo", "yamlls", "dockerls", "marksman",
+    }
+    for _, server in ipairs(servers) do
+      vim.lsp.enable(server)
+    end
   end,
 }

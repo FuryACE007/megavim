@@ -1,58 +1,107 @@
-# C++ DSA Quick Reference Card
+# Quick Reference
 
-## 🚀 Fastest Workflow
+> Run `:PDEHelp` (or press `<Space>?`) inside Neovim for the full live keymap reference.
 
-1. **Start coding**: `nvim problem.cpp`
-2. **Get template**: Type `dsa` + Tab
-3. **Test it**: Press `F5` to run
-
-That's it! 🎉
-
-## 📋 Essential Keybindings
+## 🚀 Daily Loop
 
 ```
-F4  → Compile (check errors)
-F5  → Compile + Run (type input)
-F6  → Compile + Run with input file
-
-<leader>ci → Open input file
-<leader>cr → Run test cases
-<leader>ca → Add test case
-
-Ctrl+S → Save
-<leader>mp → Format code
+<Space>?       → open full help
+<Space>ff      → find files (telescope)
+<Space>fs      → grep project
+<Space>ee      → toggle file tree
+<Tab>          → next buffer (VSCode-like tab)
+<Space>1..9    → jump to buffer N
+Ctrl-S         → save
+<Space>mp      → format buffer
+<Space>ca      → code action
+<Space>rn      → rename symbol
+gd / gR        → definition / references
+K              → hover docs
+<Ctrl-h/j/k/l> → move between splits (tmux-aware)
+<Space>sv/sh   → vertical / horizontal split
+<Space>lg      → LazyGit
 ```
 
-## 🎯 Common Snippets
+## 💻 C++ DSA
 
 ```
-dsa          → Full template
-binary_search → Binary search code
-two_pointers  → Two pointer pattern
-dfs          → DFS traversal
-bfs          → BFS traversal
-vinput       → Read vector
-vprint       → Print vector
+F4   → compile
+F5   → compile + run (interactive stdin)
+F6   → run with <name>_input.txt as stdin
+
+<Space>ci  → open <name>_input.txt
+<Space>co  → open <name>_output.txt
+<Space>cr  → CompetiTest run
+<Space>ca  → CompetiTest add testcase
+<Space>cra → CompetiTest run all
 ```
 
-## 💡 Pro Tips
+### Snippets (Tab to expand)
 
-- Use `<leader>ci` to quickly create test input
-- Press `F6` to test with saved inputs
-- Use `<leader>cr` for multiple test cases
-- Type `Ctrl+S` to save quickly
-- Template has fast I/O built-in
-
-## 📝 Template Macros
-
-```cpp
-ll          → long long
-vi          → vector<int>
-pb          → push_back
-all(x)      → x.begin(), x.end()
-sz(x)       → (int)x.size()
-F, S        → first, second (for pairs)
+```
+dsa            → full competitive template (fast I/O + macros)
+cppmain        → simple main()
+fastio         → fast I/O block
+vinput / vprint → vector read / print
+binary_search / two_pointers / sliding_window
+dfs / bfs
 ```
 
----
-See `CPP_DSA_GUIDE.md` for detailed documentation.
+### Template macros (inside `dsa`)
+
+```
+ll, vi, pb, all(x), sz(x), F, S
+```
+
+## 🦀 Rust / Solana
+
+```
+<C-Space>   → hover actions (rust-tools)
+<Space>ca   → code action group
+<Space>rt   → cargo run in floating term
+<Space>db   → toggle breakpoint (DAP)
+<Space>dc   → continue (DAP)
+```
+
+`Anchor.toml` / `Cargo.toml` get LSP via `taplo`.
+
+## 🌐 Web / MERN
+
+```
+prettierd / eslint_d run on save (eslint only if config present)
+tailwindcss class previews via LSP hover
+emmet expansion in HTML/JSX (Tab inside an abbreviation)
+prismals for schema.prisma
+```
+
+## 🐍 Python / AI
+
+```
+pyright (types) + ruff (diagnostics)
+black + isort on save
+debugpy DAP adapter installed
+```
+
+## 🛡 Solidity
+
+```
+solidity_ls_nomicfoundation LSP (diagnostics/hover/defs)
+solhint linting
+prettier formatting (install prettier-plugin-solidity in project)
+```
+
+## 🪟 Window Mastery
+
+```
+<Space>sv / sh   → split
+<Space>se        → equalize · <Space>so → close others
+<Space>sm        → maximize toggle
+<C-arrow>        → resize
+<Space>sH/J/K/L  → swap with neighbor
+```
+
+## 💡 Tips
+
+- `:PDEHelp` is the canonical reference — keep it open in a split.
+- `:FormatDisable` mutes autoformat-on-save when you need a dirty diff.
+- Press `<Space>?` from the dashboard to discover keymaps without leaving Neovim.

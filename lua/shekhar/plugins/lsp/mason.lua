@@ -5,15 +5,10 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
   config = function()
-    -- import mason
     local mason = require("mason")
-
-    -- import mason-lspconfig
     local mason_lspconfig = require("mason-lspconfig")
-
     local mason_tool_installer = require("mason-tool-installer")
 
-    -- enable mason and configure icons
     mason.setup({
       ui = {
         icons = {
@@ -25,31 +20,61 @@ return {
     })
 
     mason_lspconfig.setup({
-      -- Essential LSP servers for C++ DSA focus
       ensure_installed = {
-        "clangd",        -- C++ LSP (PRIMARY for DSA problem solving)
-        "lua_ls",        -- Lua LSP (for editing Neovim config)
-        "bashls",        -- Bash LSP (for shell scripts)
-        "rust_analyzer", -- Rust LSP (if you do Rust)
+        -- Systems / DSA
+        "clangd",
+        "rust_analyzer",
+        -- Config / scripting
+        "lua_ls",
+        "bashls",
+        -- Web / MERN
+        "ts_ls",
+        "html",
+        "cssls",
+        "tailwindcss",
+        "emmet_language_server",
+        "jsonls",
+        "eslint",
+        "prismals",
+        -- Python / AI
+        "pyright",
+        "ruff",
+        -- Blockchain
+        "solidity_ls_nomicfoundation",
+        -- DevOps / data
+        "taplo",
+        "yamlls",
+        "dockerls",
+        "marksman",
       },
-      -- Optional: Add these back if you need them:
-      -- "ts_ls", "html", "cssls", "eslint" (web dev)
-      -- "gopls" (Go), "sqlls" (SQL)
       automatic_installation = true,
     })
 
     mason_tool_installer.setup({
       ensure_installed = {
-        "prettier", -- prettier formatter
-        "stylua", -- lua formatter
+        -- Formatters
+        "prettierd",
+        "prettier",
+        "stylua",
+        "rustfmt",
+        "clang-format",
+        "shfmt",
+        "sql-formatter",
+        "black",
+        "isort",
+        -- Linters
         "eslint_d",
-        "rustfmt", -- rust formatter
-        "codelldb",    -- For Rust debugging
-        "js-debug-adapter",  -- For JavaScript/TypeScript debugging
-        "clang-format", -- C++ formatter (for DSA)
-        -- Python tools removed (not needed for C++ DSA focus):
-        -- "isort", "black", "pylint"
+        "shellcheck",
+        "hadolint",
+        "markdownlint",
+        "solhint",
+        -- Debug adapters
+        "codelldb",
+        "js-debug-adapter",
+        "debugpy",
       },
+      auto_update = false,
+      run_on_start = true,
     })
   end,
 }

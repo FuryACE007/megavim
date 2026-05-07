@@ -1,0 +1,10 @@
+CompileFlags:
+  Add: 
+    - -I~/.local/include
+    - -std=c++17
+    - -Wall
+    - -O2
+  Remove: [-m*, -f*]
+Diagnostics:
+  UnusedIncludes: None
+  MissingIncludes: None
