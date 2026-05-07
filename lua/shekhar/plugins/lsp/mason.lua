@@ -61,7 +61,7 @@ return {
         "shfmt",
         "sql-formatter",
         "black",
-        "isort",
+        -- isort removed: install via `pip install isort --user` or `brew install isort`
         -- Linters
         "eslint_d",
         "shellcheck",

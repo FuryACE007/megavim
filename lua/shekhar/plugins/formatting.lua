@@ -31,8 +31,8 @@ return {
         cpp = { "clang_format" },
         c = { "clang_format" },
 
-        -- Python / AI
-        python = { "isort", "black" },
+        -- Python / AI (ruff handles import sorting + formatting; black as fallback)
+        python = { "ruff_format", "black", stop_after_first = true },
 
         -- Blockchain
         solidity = { "prettierd", "prettier", stop_after_first = true },
