@@ -5,7 +5,87 @@
 local M = {}
 
 -----------------------------------------------------------------------
--- Keymap data — each section becomes a markdown ## heading + table
+-- "When to use which tool" — context guide shown first
+-----------------------------------------------------------------------
+local TOOL_GUIDE = {
+  "# When to Use Which Tool",
+  "",
+  "> Press `q` or `<Esc>` to close.  `j` / `k` to scroll.",
+  "",
+  "## Navigation",
+  "",
+  "| Situation | Tool |",
+  "|-----------|------|",
+  "| Jump anywhere on screen in 2–3 keystrokes | `<leader>j` — Flash jump |",
+  "| Select a syntax node (function, block…) | `<leader>J` — Flash treesitter |",
+  "| Open any file by name / fuzzy | `<leader>ff` — Telescope |",
+  "| Re-open a file you had open before | `<leader>fr` — Telescope recent |",
+  "| Pin 3–4 files you're actively editing | `<leader>Ha` — Harpoon add, `<leader>Hh` — menu |",
+  "| Find a symbol (function, type) anywhere | `<leader>fs` + symbol name — Telescope live grep |",
+  "| See all symbols in the current file | `<leader>o` — Aerial outline |",
+  "",
+  "## Editing",
+  "",
+  "| Situation | Tool |",
+  "|-----------|------|",
+  "| Toggle comment on line / selection | `gcc` / `gc` — Comment.nvim |",
+  "| Wrap text in quotes / parens / tags | `ys{motion}{char}` — nvim-surround |",
+  "| Change surrounding delimiter | `cs{old}{new}` — nvim-surround |",
+  "| Move a line or block up / down | `<A-j>` / `<A-k>` — mini.move |",
+  "| Select inner function / class / block | `vif` / `vic` / `vio` — mini.ai text objects |",
+  "| Smart increment (bool, hex, semver, date) | `<C-a>` / `<C-x>` — dial.nvim |",
+  "",
+  "## Search & Replace",
+  "",
+  "| Situation | Tool |",
+  "|-----------|------|",
+  "| Search for text across the project (read-only) | `<leader>fs` — Telescope live grep |",
+  "| Replace text across multiple files | `<leader>sr` — grug-far (opens panel; edit & save) |",
+  "| Replace word under cursor in whole project | `<leader>sw` — grug-far prefilled |",
+  "| Rename a symbol (code-aware) | `<leader>rn` — LSP rename |",
+  "",
+  "## Git",
+  "",
+  "| Situation | Tool |",
+  "|-----------|------|",
+  "| Stage, commit, push, manage branches | `<leader>lg` — LazyGit (full TUI) |",
+  "| Stage/discard just a few lines (hunk) | `<leader>hs` / `<leader>hr` — gitsigns |",
+  "| Blame this line, see who changed it | `<leader>hb` — gitsigns blame popup |",
+  "| See a diff of the whole working tree | `<leader>gd` — diffview |",
+  "| See history for one file | `<leader>gf` — diffview file history |",
+  "| Review / create / merge a GitHub PR | `<leader>op` / `oc` / `om` — Octo |",
+  "| Copy a GitHub permalink for a line | `<leader>gy` — gitlinker |",
+  "",
+  "## Diagnostics & Errors",
+  "",
+  "| Situation | Tool |",
+  "|-----------|------|",
+  "| Hover over an error / see details | `K` — LSP hover; `<leader>d` — float |",
+  "| Browse all errors in the file | `<leader>xd` — Trouble document diagnostics |",
+  "| Browse all errors in the workspace | `<leader>xw` — Trouble workspace diagnostics |",
+  "| Go to next / prev error | `]d` / `[d` |",
+  "",
+  "## AI & Completion",
+  "",
+  "| Situation | Tool |",
+  "|-----------|------|",
+  "| Inline code suggestion while typing | Copilot — automatic via blink.cmp |",
+  "| Accept Copilot suggestion | `<Tab>` in completion menu |",
+  "| AI chat / code generation | Open `claude` in a separate terminal |",
+  "",
+  "## Debugging",
+  "",
+  "| Situation | Tool |",
+  "|-----------|------|",
+  "| Set / clear a breakpoint | `<leader>db` — DAP |",
+  "| Start / continue | `<leader>dc` |",
+  "| Step into / over / out | `<leader>di` / `do` / `dO` |",
+  "| Open debug UI | `<leader>du` |",
+  "",
+}
+
+-----------------------------------------------------------------------
+-- Keymap reference — each section becomes a markdown ## heading + table
 -----------------------------------------------------------------------
 local SECTIONS = {
   {
@@ -90,14 +170,14 @@ local SECTIONS = {
       { "`<leader>d`",           "Line diagnostics float" },
       { "`<leader>D`",           "Buffer diagnostics (Telescope)" },
       { "`[d` / `]d`",           "Prev / next diagnostic" },
-      { "`[r` / `]r`",           "Prev / next reference (illuminate)" },
+      { "`[[` / `]]`",           "Prev / next reference under cursor (snacks.words)" },
       { "`<leader>rs`",          "Restart LSP" },
     },
   },
   {
-    title = "Completion (cmp + Copilot)",
+    title = "Completion (blink.cmp + Copilot)",
     rows = {
-      { "`<Tab>`",               "Next item / expand snippet" },
+      { "`<Tab>`",               "Accept / next item / expand snippet (super-tab)" },
       { "`<S-Tab>`",             "Prev item / jump back in snippet" },
       { "`<C-n>` / `<C-p>`",    "Next / prev item" },
       { "`<C-Space>`",           "Trigger completion" },
@@ -243,13 +323,70 @@ local SECTIONS = {
     },
   },
   {
+    title = "Harpoon — quick file pinning",
+    rows = {
+      { "`<leader>Ha`",          "Add current file" },
+      { "`<leader>Hh`",          "Toggle quick menu" },
+      { "`<leader>H1` .. `H4`",  "Jump to pinned file N" },
+      { "`<leader>Hn` / `Hp`",   "Next / prev in list" },
+      { "`<leader>Hc`",          "Clear list" },
+    },
+  },
+  {
+    title = "Symbol Outline (aerial)",
+    rows = {
+      { "`<leader>o`",           "Toggle outline panel" },
+      { "`{` / `}`",             "Prev / next symbol (inside aerial buffer)" },
+    },
+  },
+  {
+    title = "Project Search & Replace (grug-far)",
+    rows = {
+      { "`<leader>sr`",          "Open project search panel" },
+      { "`<leader>sw`",          "Search word under cursor" },
+      { "`<leader>r`",           "Apply replace (inside grug-far buffer)" },
+      { "`<leader>q`",           "Send results to quickfix (inside grug-far buffer)" },
+    },
+  },
+  {
+    title = "Undo Tree",
+    rows = {
+      { "`<leader>U`",           "Toggle visual undo tree" },
+    },
+  },
+  {
+    title = "Smart Increment / Decrement (dial.nvim)",
+    rows = {
+      { "`<C-a>` / `<C-x>`",     "Increment / decrement — numbers, booleans, dates, hex colors, semver" },
+      { "`g<C-a>` / `g<C-x>`",   "Cascading on visual selection" },
+    },
+  },
+  {
+    title = "Move Lines / Blocks (mini.move)",
+    rows = {
+      { "`<A-j>` / `<A-k>`",     "Move line / block down / up" },
+      { "`<A-h>` / `<A-l>`",     "Move line / block left / right" },
+    },
+  },
+  {
+    title = "UI Toggles (snacks)",
+    rows = {
+      { "`<leader>uw`",          "Toggle line wrap" },
+      { "`<leader>uL`",          "Toggle relative line numbers" },
+      { "`<leader>ud`",          "Toggle diagnostics" },
+      { "`<leader>ub`",          "Toggle dark / light background" },
+      { "`<leader>un`",          "Dismiss all notifications" },
+      { "`<leader>uN`",          "Show notification history" },
+      { "`<leader>.`",           "Toggle scratch buffer" },
+    },
+  },
+  {
     title = "Motion and Editing",
     rows = {
-      { "`<leader>j`",           "Flash jump" },
-      { "`<leader>J`",           "Flash treesitter selection" },
-      { "`s{motion}`",           "Substitute with motion" },
-      { "`ss` / `S`",            "Substitute line / to end of line" },
+      { "`<leader>j`",           "Flash jump — hop anywhere on screen in 2–3 keystrokes" },
+      { "`<leader>J`",           "Flash treesitter — select a syntax node visually" },
       { "`ys` / `ds` / `cs`",    "Surround: add / delete / change" },
+      { "`vif` / `vic` / `vio`", "mini.ai: select inner function / class / block" },
       { "`gcc` / `gc`",          "Toggle line comment / visual comment" },
       { "`]t` / `[t`",           "Next / prev TODO comment" },
       { "`zR` / `zM`",           "Open / close all folds" },
@@ -279,15 +416,17 @@ local SECTIONS = {
 }
 
 -----------------------------------------------------------------------
--- Build markdown string for PDEHelp
+-- Build markdown string for PDEHelp (tool guide + keymap reference)
 -----------------------------------------------------------------------
 local function build_markdown()
-  local lines = {
-    "# PDE Help",
-    "",
-    "> Press `q` or `<Esc>` to close.  `j` / `k` to scroll.",
-    "",
-  }
+  local lines = vim.list_extend({}, TOOL_GUIDE)
+
+  table.insert(lines, "")
+  table.insert(lines, "---")
+  table.insert(lines, "")
+  table.insert(lines, "# Keymap Reference")
+  table.insert(lines, "")
+
   for _, sec in ipairs(SECTIONS) do
     table.insert(lines, "## " .. sec.title)
     table.insert(lines, "")
@@ -350,7 +489,7 @@ end
 -- PDEHelp
 -----------------------------------------------------------------------
 function M.open()
-  open_float(build_markdown(), "PDE Help", { width = 96 })
+  open_float(build_markdown(), "PDE Help", { width = 100 })
 end
 
 vim.api.nvim_create_user_command("PDEHelp", M.open, { desc = "Open PDE help reference" })

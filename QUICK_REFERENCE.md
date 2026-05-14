@@ -20,6 +20,13 @@ K              → hover docs
 <Ctrl-h/j/k/l> → move between splits (tmux-aware)
 <Space>sv/sh   → vertical / horizontal split
 <Space>lg      → LazyGit
+<Space>aa      → AI chat (CodeCompanion — copilot/claude)
+<Space>ae      → AI inline edit (visual selection)
+<Space>Ha / Hh → Harpoon: pin file / open menu
+<Space>o       → Symbol outline (aerial)
+<Space>sr      → Project search & replace (grug-far)
+<Space>U       → Undo tree
+<Space>p       → Yank history
 ```
 
 ## 💻 C++ DSA

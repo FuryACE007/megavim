@@ -21,13 +21,16 @@ Designed so you can stay inside Neovim for the entire dev loop — no need to dr
 | LSPs | clangd, rust_analyzer, ts_ls, eslint, html, cssls, tailwindcss, emmet, jsonls, prismals, pyright, ruff, solidity_ls_nomicfoundation, taplo, yamlls, dockerls, marksman, lua_ls, bashls |
 | Formatters | prettierd/prettier, stylua, rustfmt, clang-format, black, isort, taplo, shfmt, sql-formatter |
 | Linters | eslint_d, ruff, shellcheck, hadolint, markdownlint, solhint |
-| Completion | nvim-cmp + LuaSnip + GitHub Copilot (via copilot-cmp) |
+| Completion | **blink.cmp** (Rust-backed) + LuaSnip + GitHub Copilot (via blink-copilot) |
+| AI Agent | **CodeCompanion.nvim** — chat & inline edits via Copilot or Anthropic (Claude) adapters |
 | Debugging | nvim-dap (Rust via codelldb, JS/TS via js-debug-adapter, debugpy for Python) |
-| UI | tokyonight, lualine, bufferline (VSCode-like tabs), noice, nvim-notify, alpha dashboard |
-| Editing | flash.nvim motion, illuminate, surround, substitute, autopairs, ts_context_commentstring, nvim-ufo folds, treesitter-context |
-| Files | nvim-tree, telescope (fzf-native), oil-like editing, lazygit |
+| UI | tokyonight (+ catppuccin, rose-pine, kanagawa), lualine, bufferline, **snacks.nvim** (dashboard / notifier / input / statuscolumn / scroll / indent / image / bigfile) |
+| Editing | flash.nvim motion, snacks.words, mini.ai, mini.move, dial.nvim, yanky.nvim, surround, substitute, autopairs, ts_context_commentstring, nvim-ufo folds, treesitter-context |
+| Navigation | telescope (fzf-native + ui-select), **harpoon** (file pinning), **aerial** (symbol outline), nvim-tree |
+| Search & Replace | **grug-far.nvim** (project-wide) |
 | Testing | competitest.nvim (C++ test cases) |
-| Git | gitsigns + lazygit |
+| Git | gitsigns, lazygit, diffview, git-conflict, gitlinker, octo |
+| Sessions | auto-session · **undotree** for visual undo history |
 
 ---
 
@@ -144,11 +147,25 @@ GitHub Copilot: run `:Copilot auth` (then follow device-code flow). Disable with
 
 ## 🧠 Completion & AI
 
-- `<Tab>` / `<S-Tab>` — pick next/prev item or expand/jump in snippets
+**Completion — blink.cmp (Rust-backed, sub-ms fuzzy matching):**
+
+- `<Tab>` / `<S-Tab>` — accept / next or prev item, expand or jump in snippets (super-tab preset)
 - `<C-Space>` — trigger completion explicitly
 - `<C-n>` / `<C-p>` — cycle items
 - `<C-b>` / `<C-f>` — scroll docs · `<C-e>` — abort · `<CR>` — confirm
-- Copilot suggestions appear inline as cmp items (priority 100). Run `:Copilot status` to verify.
+- Sources: `copilot` → `lsp` → `snippets` → `buffer` → `path`. Copilot suggestions appear inline as cmp items.
+- Run `:Copilot status` to verify Copilot is authenticated.
+
+**AI Agent — CodeCompanion (chat with Copilot or Claude):**
+
+- `<Space>aa` — toggle chat buffer
+- `<Space>ac` — new chat
+- `<Space>ae` — inline edit on visual selection
+- `<Space>ap` — action palette
+- `<Space>aq` — add visual selection to chat
+- `<Space>aA` — switch adapter (copilot ↔ anthropic)
+- Default adapter is **`claude_code`** — uses the `claude` CLI from your Claude Code subscription. No API key required; just needs `claude` in your `PATH` and `claude auth` to be done.
+- `<Space>aA` cycles: `claude_code` → `copilot` → `anthropic` → back. `anthropic` requires `ANTHROPIC_API_KEY` in env.
 
 ---
 
@@ -156,7 +173,7 @@ GitHub Copilot: run `:Copilot auth` (then follow device-code flow). Disable with
 
 - `<Space>d` line float · `<Space>D` buffer list (telescope) · `[d` / `]d` jump
 - `<Space>x{w,d,q,l,t}` — Trouble panels: workspace / document / quickfix / loclist / todos
-- `[r` / `]r` — jump between references of symbol under cursor (illuminate)
+- `[[` / `]]` — jump between references of symbol under cursor (snacks.words)
 
 ---
 

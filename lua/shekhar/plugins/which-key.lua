@@ -6,8 +6,23 @@ return {
     vim.o.timeoutlen = 500
   end,
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    spec = {
+      { "<leader>b", group = "Buffers" },
+      { "<leader>c", group = "Code / Conflict / C++" },
+      { "<leader>d", group = "Debug / Diagnostics" },
+      { "<leader>e", group = "Explorer" },
+      { "<leader>f", group = "Find (Telescope)" },
+      { "<leader>g", group = "Git" },
+      { "<leader>h", group = "Hunks (gitsigns)" },
+      { "<leader>H", group = "Harpoon", icon = "󱡅" },
+      { "<leader>l", group = "LazyGit" },
+      { "<leader>o", group = "Octo (GitHub)" },
+      { "<leader>r", group = "Rename / LSP" },
+      { "<leader>s", group = "Splits / Search" },
+      { "<leader>t", group = "Tabs / Terminal" },
+      { "<leader>u", group = "UI Toggles" },
+      { "<leader>w", group = "Workspace / Session" },
+      { "<leader>x", group = "Diagnostics (Trouble)" },
+    },
   },
 }
